@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1019</width>
+    <height>585</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>EasyAcct Unified Bank Account Manager</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>721</width>
+      <height>481</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Database View</string>
+    </property>
+    <widget class="QTableView" name="vD_Table">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>701</width>
+       <height>431</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="vD_DatabaseTitle">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>681</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>No Database Selected.</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>490</y>
+      <width>721</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Status View</string>
+    </property>
+    <widget class="QProgressBar" name="vS_ProgressBar">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>371</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="value">
+      <number>0</number>
+     </property>
+     <property name="textVisible">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="vS_History">
+     <property name="geometry">
+      <rect>
+       <x>383</x>
+       <y>20</y>
+       <width>331</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="duplicatesEnabled">
+      <bool>true</bool>
+     </property>
+     <property name="DropDownStyle" stdset="0">
+      <string>DropDownList</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_3">
+    <property name="geometry">
+     <rect>
+      <x>740</x>
+      <y>10</y>
+      <width>271</width>
+      <height>531</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Properties View</string>
+    </property>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>91</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Account Name</string>
+     </property>
+    </widget>
+    <widget class="KLineEdit" name="vP_AccountNameBox">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>251</width>
+       <height>23</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>81</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Account Type</string>
+     </property>
+    </widget>
+    <widget class="KLineEdit" name="vP_AccounTypeBox">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>100</y>
+       <width>251</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>130</y>
+       <width>251</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Account Balance</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="vP_AccountBalanceBox">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>150</y>
+       <width>251</width>
+       <height>23</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_4">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>190</y>
+       <width>231</width>
+       <height>311</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Account Options</string>
+     </property>
+     <widget class="QPushButton" name="vP_b_accountDeposit">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>211</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Deposit Amount...</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="vP_b_accountWithdraw">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>211</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Withdraw Amount...</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="vP_b_accountSetBal">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>211</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Set Account Balance...</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="vP_b_retrieveAccountHistory">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>150</y>
+        <width>211</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Retrieve Account History...</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="vP_b_updateAccountInfo">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>180</y>
+        <width>211</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Update Account Information...</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="vP_b_closeAccount">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>270</y>
+        <width>211</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Close Account...</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1019</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionNew_Database"/>
+    <addaction name="actionCreate_Database"/>
+    <addaction name="actionSave_Database"/>
+   </widget>
+   <widget class="QMenu" name="menuAccounts">
+    <property name="title">
+     <string>Accounts</string>
+    </property>
+    <addaction name="actionNew_Account"/>
+    <addaction name="actionClose_Account"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionAccount_Policy_Reference"/>
+   </widget>
+   <widget class="QMenu" name="menuConnection">
+    <property name="title">
+     <string>Connection</string>
+    </property>
+    <addaction name="actionConnect_to_Database_Server"/>
+    <addaction name="actionDisconnect"/>
+    <addaction name="separator"/>
+    <addaction name="actionFetch_entries_from_Server"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuAccounts"/>
+   <addaction name="menuConnection"/>
+   <addaction name="menuView"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionNew_Database">
+   <property name="text">
+    <string>New Database File</string>
+   </property>
+  </action>
+  <action name="actionCreate_Database">
+   <property name="text">
+    <string>Open Database From File</string>
+   </property>
+  </action>
+  <action name="actionSave_Database">
+   <property name="text">
+    <string>Save Database To File</string>
+   </property>
+  </action>
+  <action name="actionConnect_to_Database_Server">
+   <property name="text">
+    <string>Connect to Database Server...</string>
+   </property>
+  </action>
+  <action name="actionDisconnect">
+   <property name="text">
+    <string>Disconnect</string>
+   </property>
+  </action>
+  <action name="actionNew_Account">
+   <property name="text">
+    <string>Open Account</string>
+   </property>
+  </action>
+  <action name="actionClose_Account">
+   <property name="text">
+    <string>Close Account</string>
+   </property>
+  </action>
+  <action name="actionChange_Account_Type">
+   <property name="text">
+    <string>Change Account Type</string>
+   </property>
+  </action>
+  <action name="actionAccount_Policy_Reference">
+   <property name="text">
+    <string>Account Policy Reference</string>
+   </property>
+  </action>
+  <action name="actionFetch_entries_from_Server">
+   <property name="text">
+    <string>Fetch entries from Server...</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
