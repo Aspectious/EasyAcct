@@ -1,0 +1,191 @@
+import sys
+import time
+from contextlib import nullcontext
+from enum import Enum
+from errno import errorcode
+
+import mysql.connector
+import sqlite3
+
+from util.Accounts import Account
+
+
+# I made an Enum because it was so damn hard to keep track of how I
+# formatted strings to determine the state of a database connection
+class ConnectionState(Enum):
+    UNKNOWN = 0         # Defines a connection that has yet to be tested or connected
+    CONNECTING = 1      # Defines a connection partway between Connected and Disconnected
+    CONNECTED = 2       # Defines a connected, ready connection.
+    DISCONNECTED = 3    # Defines a disconnected, unavailable yet previously used connection.
+    ERROR = 4           # Defines a connection that has errored out and should be reconnected with caution.
+
+
+class Connection():
+    def __init__(self, type, accttable, transtable):
+        self.type = type
+        self.accttable = accttable
+        self.transtable = transtable
+        self.state = ConnectionState.UNKNOWN
+
+    def setMySqlData(self,host, port, user, password, database):
+        self.host = host
+        self.port = port
+        self.user = user
+        self.password = password
+        self.database = database
+
+    def __executeSingle(self, statement):
+        pass
+
+    def __executeMany(self, statement, data):
+        pass
+    def openConnection(self):
+        pass
+    def closeConnection(self):
+        pass
+    def fetchAllAccounts(self):
+        pass
+    def fetchAllTransactions(self):
+        pass
+    def fetchTransactionsFromAccount(self, account:Account):
+        pass
+
+
+
+class SqLiteConnection(Connection):
+    def __init__(self, filelocation, accttable, transtable):
+        Connection.__init__(self, 0, accttable, transtable)
+        self.database = filelocation
+
+    def openConnection(self):
+        self.state = ConnectionState.CONNECTING
+        try:
+            self.__connection = sqlite3.connect(self.database)
+            self.state = ConnectionState.CONNECTED
+            return 0
+        except:
+            self.state = ConnectionState.ERROR
+            return 1
+
+    def __executeSingle(self, statement):
+        self.__cur = self.__connection.cursor()
+        result = self.__cur.execute(statement)
+        self.__connection.commit()
+        result = result.fetchall()
+        self.__cur.close()
+        return result;
+
+    def __executemany(self, statement, data):
+        self.__cur = self.__connection.cursor()
+        result = self.__cur.executemany(statement, data)
+        self.__connection.commit()
+        result = result.fetchall()
+        self.__cur.close()
+        return result
+
+
+    def test(self):
+        test1 = self.__executeSingle("SELECT 1;")
+        return test1
+
+
+
+
+class MySQLConnection(Connection):
+    def __init__(self, host:str, port:int, user:str, password:str, database:str, accttable:str, transtable:str):
+        super().__init__(1, accttable, transtable)
+        super().setMySqlData(host, port, user, password, database)
+
+    def openConnection(self):
+        attempt = 1
+        while attempt < 4:
+            self.state = ConnectionState.CONNECTING
+            try:
+                self.__connection = mysql.connector.connect(user=self.user, password=self.password,
+                                                            database=self.database, host=self.host, connection_timeout=5)
+                self.state = ConnectionState.CONNECTED
+                return 0
+            except mysql.connector.Error as err:
+                self.state = ConnectionState.ERROR
+                if err == mysql.connector.DatabaseError:
+                    return 1
+                elif err.errno == 1045: # Access Denied error
+                    return 2
+                elif err.errno == 2003: # Invalid or Unknown Host / Can't Connect
+                    return 3
+            except Exception as err:
+                self.state = ConnectionState.ERROR
+                return -1
+            time.sleep(500 ** attempt)
+            attempt += 1
+        self.state = ConnectionState.ERROR
+        return 4
+
+    def closeConnection(self):
+        self.state = ConnectionState.CONNECTING
+        try:
+            self.__connection.close()
+            self.state = ConnectionState.DISCONNECTED
+        except Exception as err:
+            self.state = ConnectionState.ERROR
+            print(err)
+
+
+    def __executeSelectSingle(self, statement):
+        self.__cur = self.__connection.cursor()
+        self.__cur.execute(statement)
+        rows = self.__cur.fetchall()
+        self.__cur.close()
+        return rows
+    def __executeSelectMany(self, statement, data):
+        self.__cur = self.__connection.cursor()
+        self.__cur.execute(statement, data)
+        result = self.__cur.fetchall()
+        self.__cur.close()
+        return result
+
+    def __executeInsertSingle(self, statement):
+        self.__cur = self.__connection.cursor()
+        self.__cur.execute(statement)
+        self.__connection.commit()
+        self.__cur.close()
+
+    def __executeInsertMany(self, statement, data):
+        statement.replace("?","%s")
+        self.__cur = self.__connection.cursor()
+        self.__cur.execute(statement, data)
+        self.__connection.commit()
+        self.__cur.close()
+
+    def test(self):
+        test1 = self.__executeSelectSingle("SELECT 1;")
+        if test1 == [(1,)]:
+            try:
+                test2 = self.__executeSelectSingle("SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME ='" + self.accttable + "';") # This is insecure but as of writing this I can't get select many to work, and the results never get sent to the user anyway.
+                if len(test2) >= 1:
+                    try:
+                        test2 = self.__executeSelectSingle(
+                            "SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME ='" + self.transtable + "';")  # This is insecure but as of writing this I can't get select many to work, and the results never get sent to the user anyway.
+                        if len(test2) >= 1:
+                            return 1
+                    except Exception as err:
+                        print(err)
+                        return 4
+            except Exception as err:
+                print(err)
+                return 3
+
+        # Able to detect both neccessary tables
+        return 1
+
+    def fetchAllAccounts(self):
+        query = self.__executeSelectSingle("SELECT * FROM " + self.accttable)
+        return query
+
+    def fetchAllTransactions(self):
+        query = self.__executeSelectSingle("SELECT * FROM " + self.transtable)
+        return query
+
+    def fetchTransactionsFromAccount(self, account:Account):
+        query = self.__executeSelectMany("SELECT * FROM %s WHERE AccountName=%s;", (self.transtable, account.account_name))
+        return query
