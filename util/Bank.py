@@ -56,6 +56,7 @@ class Bank:
     def fetchAllAccounts(self):
         return self.__accounts
 
+
     def fetchAllTransactionsFromAccount(self, accountName:str):
         transactions = []
         for (transaction) in self.__transactions:

@@ -1,2 +1,5 @@
 .idea/
 queries/
+gui/__pycache__
+util/__pycache__
+util/db/__pycache__

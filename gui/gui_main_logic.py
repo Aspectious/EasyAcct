@@ -1,15 +1,14 @@
 import time
 
-from PyQt5.QtSql import transaction
 from PyQt6 import QtWidgets, QtCore
 from PyQt6.QtCore import Qt, QModelIndex
-from pyverbs.mr import MW
 
 from gui.gui_main import Ui_MainWindow
 from gui.gui_conn_logic import ConnMgr
 from gui.gui_acctedit_logic import AcctEdit, AcctEdit_New
 
 from util.db.connmgr import MySQLConnection, SqLiteConnection, Connection, ConnectionState
+
 
 from util.Accounts import Account, SavingAccount
 from util.Bank import Bank
@@ -172,18 +171,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                         transtype = "Deposit"
                     else:
                         transtype = "Withdraw"
-                        transactionobj = Transaction(transaction[1], transaction[2], tranasaction[3])
-                        self.Bank.writeTransaction(transaction)
+
+                    acct = self.Bank.fetchAccount(transaction[1])
+
+                    transactionobj = Transaction(acct, transaction[2], transaction[3], transaction[4])
+                    self.Bank.writeTransaction(transaction)
             except Exception as e:
                 print(e)
 
-    def loadUsers(self, accountlist):
+    def loadAcctTable(self, accountlist):
         self.DATAMODEL = AccountTableModel()
 
+        for account in self.Bank.fetchAllAccounts():
+            self.DATAMODEL.addRecord(account)
 
-                    self.DATAMODEL.addRecord(acctobj)
-
-                self.vD_Table.setModel(self.DATAMODEL)
+        self.vD_Table.setModel(self.DATAMODEL)
 
 
 
