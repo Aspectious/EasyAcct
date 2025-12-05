@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>360</width>
-    <height>445</height>
+    <width>355</width>
+    <height>493</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Connection Manager</string>
+   <string>Add Connection</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
@@ -25,18 +25,15 @@
      <height>32</height>
     </rect>
    </property>
-   <property name="orientation">
-    <enum>Qt::Orientation::Horizontal</enum>
-   </property>
    <property name="standardButtons">
-    <set>QDialogButtonBox::StandardButton::Close|QDialogButtonBox::StandardButton::Ok</set>
+    <set>QDialogButtonBox::NoButton</set>
    </property>
   </widget>
   <widget class="QPushButton" name="b_testConn">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>410</y>
+     <y>450</y>
      <width>131</width>
      <height>31</height>
     </rect>
@@ -49,7 +46,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>10</y>
+     <y>70</y>
      <width>341</width>
      <height>221</height>
     </rect>
@@ -57,7 +54,7 @@
    <property name="title">
     <string>Connection Options</string>
    </property>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="label_connaddr">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -83,7 +80,7 @@
      <string>localhost</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="conn_portLabel">
     <property name="geometry">
      <rect>
       <x>260</x>
@@ -190,12 +187,28 @@
      <number>3306</number>
     </property>
    </widget>
+   <widget class="QPushButton" name="fileselButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>40</y>
+      <width>71</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Select...</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QGroupBox" name="groupBox_2">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>240</y>
+     <y>290</y>
      <width>341</width>
      <height>131</height>
     </rect>
@@ -249,7 +262,7 @@
      </rect>
     </property>
     <property name="echoMode">
-     <enum>QLineEdit::EchoMode::Password</enum>
+     <enum>QLineEdit::Normal</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="conn_b_showpassword">
@@ -273,7 +286,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>380</y>
+     <y>430</y>
      <width>341</width>
      <height>20</height>
     </rect>
@@ -281,9 +294,48 @@
    <property name="text">
     <string>Connection Not Established</string>
    </property>
-   <property name="alignment">
-    <set>Qt::AlignmentFlag::AlignCenter</set>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_3">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>341</width>
+     <height>61</height>
+    </rect>
    </property>
+   <property name="title">
+    <string>Connection Type</string>
+   </property>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>321</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QRadioButton" name="rb_ConnRemote">
+       <property name="text">
+        <string>Remote Server (Mysql/Mariadb)</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="rb_ConnLocal">
+       <property name="text">
+        <string>Local Database File (.db)</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
  </widget>
  <resources/>

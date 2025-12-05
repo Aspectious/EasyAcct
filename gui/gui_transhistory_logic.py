@@ -58,7 +58,11 @@ class TransHistory(QtWidgets.QDialog, Ui_TransHistory):
         super(TransHistory, self).__init__(parent)
         self.setupUi(self)
 
-    def lookupTransactionsForAccount(self):
+    def lookupTransactionsForAccount(self, acc:Account):
         conn = MW.CONNECTION
         if (conn.state == "Connected"):
+            conn.fetchTransactionsFromAccount()
+        else:
+            print("uh oh")
+            return
 
