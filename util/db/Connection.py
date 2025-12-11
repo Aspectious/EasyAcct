@@ -27,6 +27,9 @@ class Connection():
         self.transtable = transtable
         self.state = ConnectionState.UNKNOWN
 
+    def __str__(self):
+        return "Unknown Connection"
+
     def setMySqlData(self,host, port, user, password, database):
         self.host = host
         self.port = port
@@ -56,6 +59,9 @@ class SqLiteConnection(Connection):
     def __init__(self, filelocation, accttable, transtable):
         Connection.__init__(self, 0, accttable, transtable)
         self.database = filelocation
+
+    def __str__(self):
+        return f"Local: {self.database}"
 
     def openConnection(self):
         self.state = ConnectionState.CONNECTING
@@ -96,6 +102,8 @@ class MySQLConnection(Connection):
         super().__init__(1, accttable, transtable)
         super().setMySqlData(host, port, user, password, database)
 
+    def __str__(self):
+        return f"Remote: {self.user} @ mysql://{self.host}:{self.port}/{self.database}"
     def openConnection(self):
         attempt = 1
         while attempt < 4:

@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1019</width>
-    <height>585</height>
+    <width>1020</width>
+    <height>600</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1020</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1020</width>
+    <height>600</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>EasyAcct Unified Bank Account Manager</string>
@@ -175,7 +187,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>20</y>
+        <y>30</y>
         <width>211</width>
         <height>27</height>
        </rect>
@@ -188,7 +200,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>50</y>
+        <y>60</y>
         <width>211</width>
         <height>27</height>
        </rect>
@@ -201,7 +213,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>80</y>
+        <y>90</y>
         <width>211</width>
         <height>27</height>
        </rect>
@@ -280,24 +292,45 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1019</width>
-     <height>21</height>
+     <width>1020</width>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionExport_Database_to_File"/>
+    <widget class="QMenu" name="menuNew">
+     <property name="title">
+      <string>New...</string>
+     </property>
+     <addaction name="actionBlank_Database_File"/>
+    </widget>
+    <widget class="QMenu" name="menuImport">
+     <property name="title">
+      <string>Import...</string>
+     </property>
+     <addaction name="actionAccount_Data_from_CSV"/>
+     <addaction name="actionTransaction_Data_from_CSV"/>
+    </widget>
+    <widget class="QMenu" name="menuExport">
+     <property name="title">
+      <string>Export...</string>
+     </property>
+     <addaction name="actionAccounts_to_CSV"/>
+     <addaction name="actionTransactions_to_CSV"/>
+    </widget>
+    <addaction name="menuNew"/>
+    <addaction name="separator"/>
+    <addaction name="menuImport"/>
+    <addaction name="menuExport"/>
    </widget>
    <widget class="QMenu" name="menuAccounts">
     <property name="title">
      <string>Accounts</string>
     </property>
     <addaction name="mb_a_open"/>
-    <addaction name="mb_a_close"/>
     <addaction name="separator"/>
-    <addaction name="actionImport_Accounts_from_CSV"/>
    </widget>
    <widget class="QMenu" name="menuConnection">
     <property name="title">
@@ -305,7 +338,8 @@
     </property>
     <addaction name="mb_c_connectionoptions"/>
     <addaction name="separator"/>
-    <addaction name="actionRefresh_Current_Connection"/>
+    <addaction name="actionSync_with_connection"/>
+    <addaction name="actionPush_Changes"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -403,6 +437,51 @@
   <action name="actionAbout">
    <property name="text">
     <string>About</string>
+   </property>
+  </action>
+  <action name="actionSync_with_connection">
+   <property name="text">
+    <string>Fetch Changes</string>
+   </property>
+  </action>
+  <action name="actionPush_Changes">
+   <property name="text">
+    <string>Push Changes</string>
+   </property>
+  </action>
+  <action name="actionCreate_Blank_Database_File">
+   <property name="text">
+    <string>Create Blank Database File</string>
+   </property>
+  </action>
+  <action name="actionBlank_Database_File">
+   <property name="text">
+    <string>Blank Database File (.db)</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save...</string>
+   </property>
+  </action>
+  <action name="actionAccount_Data_from_CSV">
+   <property name="text">
+    <string>Account Data from .CSV</string>
+   </property>
+  </action>
+  <action name="actionTransaction_Data_from_CSV">
+   <property name="text">
+    <string>Transaction Data from .CSV</string>
+   </property>
+  </action>
+  <action name="actionAccounts_to_CSV">
+   <property name="text">
+    <string>Accounts to .CSV</string>
+   </property>
+  </action>
+  <action name="actionTransactions_to_CSV">
+   <property name="text">
+    <string>Transactions to .CSV</string>
    </property>
   </action>
  </widget>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ConnMgr</class>
- <widget class="QDialog" name="ConnMgr">
+ <class>NewConn</class>
+ <widget class="QDialog" name="NewConn">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>355</width>
-    <height>493</height>
+    <width>359</width>
+    <height>532</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,20 +20,20 @@
    <property name="geometry">
     <rect>
      <x>190</x>
-     <y>410</y>
+     <y>490</y>
      <width>161</width>
      <height>32</height>
     </rect>
    </property>
    <property name="standardButtons">
-    <set>QDialogButtonBox::NoButton</set>
+    <set>QDialogButtonBox::StandardButton::Discard|QDialogButtonBox::StandardButton::Save</set>
    </property>
   </widget>
   <widget class="QPushButton" name="b_testConn">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>450</y>
+     <y>490</y>
      <width>131</width>
      <height>31</height>
     </rect>
@@ -46,7 +46,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>70</y>
+     <y>110</y>
      <width>341</width>
      <height>221</height>
     </rect>
@@ -208,7 +208,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>290</y>
+     <y>330</y>
      <width>341</width>
      <height>131</height>
     </rect>
@@ -262,7 +262,7 @@
      </rect>
     </property>
     <property name="echoMode">
-     <enum>QLineEdit::Normal</enum>
+     <enum>QLineEdit::EchoMode::Normal</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="conn_b_showpassword">
@@ -286,7 +286,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>430</y>
+     <y>470</y>
      <width>341</width>
      <height>20</height>
     </rect>
@@ -301,22 +301,29 @@
      <x>10</x>
      <y>10</y>
      <width>341</width>
-     <height>61</height>
+     <height>101</height>
     </rect>
    </property>
    <property name="title">
     <string>Connection Type</string>
    </property>
-   <widget class="QWidget" name="horizontalLayoutWidget">
+   <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>321</width>
-      <height>31</height>
+      <x>50</x>
+      <y>30</y>
+      <width>231</width>
+      <height>61</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QRadioButton" name="rb_ConnLocal">
+       <property name="text">
+        <string>Local Database File (.db)</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <widget class="QRadioButton" name="rb_ConnRemote">
        <property name="text">
@@ -324,13 +331,6 @@
        </property>
        <property name="checked">
         <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="rb_ConnLocal">
-       <property name="text">
-        <string>Local Database File (.db)</string>
        </property>
       </widget>
      </item>
@@ -343,7 +343,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>ConnMgr</receiver>
+   <receiver>NewConn</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -359,7 +359,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>ConnMgr</receiver>
+   <receiver>NewConn</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

@@ -4,10 +4,11 @@ from PyQt6 import QtWidgets, QtCore
 from PyQt6.QtCore import Qt, QModelIndex
 
 from gui.gui_main import Ui_MainWindow
-from gui.gui_conn_logic import ConnMgr
-from gui.gui_acctedit_logic import AcctEdit, AcctEdit_New
+from logic.logic_acctedit import AcctEdit_New
+from logic.logic_connmgr import ConnMgr
 
-from util.db.connmgr import MySQLConnection, SqLiteConnection, Connection, ConnectionState
+
+from util.db.Connection import MySQLConnection, SqLiteConnection, Connection, ConnectionState
 
 
 from util.Accounts import Account, SavingAccount
@@ -78,8 +79,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.Bank = Bank()
 
         # Developer Mode
-        self.setConnection(1, ["localhost", 3306, "accountant", "bankingIsEasy123", "EasyAcct", "PrimaryAccounts", "PrimaryAccounts.Transactions"])
-        self.connectDatabase()
+        #self.setConnection(1, ["localhost", 3306, "accountant", "bankingIsEasy123", "EasyAcct", "PrimaryAccounts", "PrimaryAccounts.Transactions"])
+        #self.connectDatabase()
 
     def openNewAccount(self):
         dialog = AcctEdit_New()

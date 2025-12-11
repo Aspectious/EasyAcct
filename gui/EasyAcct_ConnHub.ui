@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>ConnMgr</class>
+ <widget class="QDialog" name="ConnMgr">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>369</width>
-    <height>235</height>
+    <width>421</width>
+    <height>232</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,17 +16,17 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>190</x>
+     <x>250</x>
      <y>200</y>
      <width>151</width>
      <height>32</height>
     </rect>
    </property>
    <property name="orientation">
-    <enum>Qt::Horizontal</enum>
+    <enum>Qt::Orientation::Horizontal</enum>
    </property>
    <property name="standardButtons">
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+    <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
    </property>
   </widget>
   <widget class="QListView" name="connList">
@@ -34,7 +34,7 @@
     <rect>
      <x>10</x>
      <y>30</y>
-     <width>256</width>
+     <width>311</width>
      <height>161</height>
     </rect>
    </property>
@@ -55,7 +55,7 @@
   <widget class="QPushButton" name="b_New">
    <property name="geometry">
     <rect>
-     <x>280</x>
+     <x>330</x>
      <y>50</y>
      <width>81</width>
      <height>20</height>
@@ -68,7 +68,7 @@
   <widget class="QPushButton" name="b_Edit">
    <property name="geometry">
     <rect>
-     <x>280</x>
+     <x>330</x>
      <y>80</y>
      <width>81</width>
      <height>20</height>
@@ -81,35 +81,35 @@
   <widget class="QPushButton" name="b_Select">
    <property name="geometry">
     <rect>
-     <x>280</x>
+     <x>330</x>
      <y>110</y>
      <width>81</width>
      <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>Set as Selected</string>
+    <string>Set Active</string>
    </property>
   </widget>
   <widget class="QPushButton" name="b_delete">
    <property name="geometry">
     <rect>
-     <x>280</x>
+     <x>330</x>
      <y>140</y>
      <width>81</width>
      <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>Delete...</string>
+    <string>Delete</string>
    </property>
   </widget>
   <widget class="QCheckBox" name="c_savecfg">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>200</y>
-     <width>131</width>
+     <width>221</width>
      <height>31</height>
     </rect>
    </property>
@@ -123,7 +123,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>Dialog</receiver>
+   <receiver>ConnMgr</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -139,7 +139,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>Dialog</receiver>
+   <receiver>ConnMgr</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

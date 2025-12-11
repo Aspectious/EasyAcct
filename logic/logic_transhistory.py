@@ -4,8 +4,7 @@ from PyQt6.QtCore import Qt
 from gui.gui_transhistory import Ui_TransHistory
 from util.Accounts import Account
 from util.Transaction import Transaction
-from util.db.connmgr import Connection
-from gui.gui_main_logic import MainWindow as MW
+from logic.logic_main import MainWindow as MW
 
 class TransactionTableModel(QtCore.QAbstractTableModel):
     def __init__(self, parent=None):

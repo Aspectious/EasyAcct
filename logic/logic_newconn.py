@@ -1,12 +1,14 @@
 from PyQt6 import QtWidgets
 from PyQt6.QtWidgets import QLineEdit
 
-from gui.gui_conn import Ui_ConnMgr
+from gui.gui_newconn import Ui_NewConn
+from util.db.Connection import Connection
 
-import util.db.connmgr as connmgr
-import gui.gui_main_logic as MainWin
-class ConnMgr(QtWidgets.QDialog, Ui_ConnMgr):
-    def __init__(self):
+import util.db.Connection as connmgr
+import logic.logic_main as MainWin
+
+class NewConn(QtWidgets.QDialog, Ui_NewConn):
+    def __init__(self, existingConn:Connection=None):
         super().__init__()
         self.setupUi(self)
         self.setFixedSize(self.width(), self.height())
@@ -15,15 +17,14 @@ class ConnMgr(QtWidgets.QDialog, Ui_ConnMgr):
         self.buttonBox.rejected.connect(self.reject)
         self.buttonBox.accepted.connect(self.accept)
         try:
-            if (MainWin.MainWindow.CONTYPE == 1):
-                Details = MainWin.MainWindow.CONDETAILS
-                self.conn_addr.setText(Details[0])
-                self.conn_port.setValue(Details[1])
-                self.conn_uname.setText(Details[2])
-                self.conn_pass.setText(Details[3])
-                self.conn_schema.setText(Details[4])
-                self.conn_t_accts.setText(Details[5])
-                self.conn_t_trans.setText(Details[6])
+            if (existingConn != None):
+                self.conn_addr.setText(existingConn.host)
+                self.conn_port.setValue(str(existingConn.port))
+                self.conn_uname.setText(existingConn.user)
+                self.conn_pass.setText(existingConn.password)
+                self.conn_schema.setText(existingConn.database)
+                self.conn_t_accts.setText(existingConn.accttable)
+                self.conn_t_trans.setText(existingConn.transtable)
         except Exception as e:
             print(e)
 

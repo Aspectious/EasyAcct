@@ -1,15 +1,24 @@
 # main.py
 # Main file for program "EasyAcct"
 # aspectious.dev
-import sys
-from PyQt6 import QtWidgets
 
-from gui.gui_main_logic import MainWindow
-from util.db.connmgr import *
+
+"""
+This stores a static reference of the Application class to
+handle connections and the floating bank reference outside 
+of GUI logic scripts.
+"""
+from util.Application import Application
+application: Application = Application()
+
 
 if __name__ == '__main__':
+    from PyQt6 import QtWidgets
 
-    application = QtWidgets.QApplication(sys.argv)
+    from logic.logic_main import MainWindow
+    from util.db.Connection import *
+
+    program = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
     window.show()
-    sys.exit(application.exec())
+    sys.exit(program.exec())
