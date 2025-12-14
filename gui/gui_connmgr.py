@@ -36,9 +36,6 @@ class Ui_ConnMgr(object):
         self.b_delete = QtWidgets.QPushButton(parent=ConnMgr)
         self.b_delete.setGeometry(QtCore.QRect(330, 140, 81, 20))
         self.b_delete.setObjectName("b_delete")
-        self.c_savecfg = QtWidgets.QCheckBox(parent=ConnMgr)
-        self.c_savecfg.setGeometry(QtCore.QRect(10, 200, 221, 31))
-        self.c_savecfg.setObjectName("c_savecfg")
 
         self.retranslateUi(ConnMgr)
         self.buttonBox.accepted.connect(ConnMgr.accept) # type: ignore
@@ -53,4 +50,3 @@ class Ui_ConnMgr(object):
         self.b_Edit.setText(_translate("ConnMgr", "Edit..."))
         self.b_Select.setText(_translate("ConnMgr", "Set Active"))
         self.b_delete.setText(_translate("ConnMgr", "Delete"))
-        self.c_savecfg.setText(_translate("ConnMgr", "Save this configuration list"))

@@ -116,7 +116,7 @@
       <x>740</x>
       <y>10</y>
       <width>271</width>
-      <height>531</height>
+      <height>481</height>
      </rect>
     </property>
     <property name="title">
@@ -177,7 +177,7 @@
        <x>20</x>
        <y>190</y>
        <width>231</width>
-       <height>311</height>
+       <height>281</height>
       </rect>
      </property>
      <property name="title">
@@ -252,7 +252,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>270</y>
+        <y>240</y>
         <width>211</width>
         <height>27</height>
        </rect>
@@ -286,6 +286,19 @@
      </property>
     </widget>
    </widget>
+   <widget class="QPushButton" name="commitchanges">
+    <property name="geometry">
+     <rect>
+      <x>740</x>
+      <y>500</y>
+      <width>261</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Commit Changes to Database</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -304,30 +317,22 @@
      <property name="title">
       <string>New...</string>
      </property>
-     <addaction name="actionBlank_Database_File"/>
+     <addaction name="mf_b_newdbfile"/>
     </widget>
     <widget class="QMenu" name="menuImport">
      <property name="title">
       <string>Import...</string>
      </property>
-     <addaction name="actionAccount_Data_from_CSV"/>
-     <addaction name="actionTransaction_Data_from_CSV"/>
-    </widget>
-    <widget class="QMenu" name="menuExport">
-     <property name="title">
-      <string>Export...</string>
-     </property>
-     <addaction name="actionAccounts_to_CSV"/>
-     <addaction name="actionTransactions_to_CSV"/>
+     <addaction name="mf_i_importacctfromcsv"/>
+     <addaction name="mf_i_importtransfromcsv"/>
     </widget>
     <addaction name="menuNew"/>
     <addaction name="separator"/>
     <addaction name="menuImport"/>
-    <addaction name="menuExport"/>
    </widget>
    <widget class="QMenu" name="menuAccounts">
     <property name="title">
-     <string>Accounts</string>
+     <string>Bank</string>
     </property>
     <addaction name="mb_a_open"/>
     <addaction name="separator"/>
@@ -339,7 +344,6 @@
     <addaction name="mb_c_connectionoptions"/>
     <addaction name="separator"/>
     <addaction name="actionSync_with_connection"/>
-    <addaction name="actionPush_Changes"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -441,7 +445,7 @@
   </action>
   <action name="actionSync_with_connection">
    <property name="text">
-    <string>Fetch Changes</string>
+    <string>Reload from Database</string>
    </property>
   </action>
   <action name="actionPush_Changes">
@@ -454,7 +458,7 @@
     <string>Create Blank Database File</string>
    </property>
   </action>
-  <action name="actionBlank_Database_File">
+  <action name="mf_b_newdbfile">
    <property name="text">
     <string>Blank Database File (.db)</string>
    </property>
@@ -464,12 +468,12 @@
     <string>Save...</string>
    </property>
   </action>
-  <action name="actionAccount_Data_from_CSV">
+  <action name="mf_i_importacctfromcsv">
    <property name="text">
     <string>Account Data from .CSV</string>
    </property>
   </action>
-  <action name="actionTransaction_Data_from_CSV">
+  <action name="mf_i_importtransfromcsv">
    <property name="text">
     <string>Transaction Data from .CSV</string>
    </property>
@@ -482,6 +486,11 @@
   <action name="actionTransactions_to_CSV">
    <property name="text">
     <string>Transactions to .CSV</string>
+   </property>
+  </action>
+  <action name="mb_a_offlineinitial">
+   <property name="text">
+    <string>Initialize Offline</string>
    </property>
   </action>
  </widget>

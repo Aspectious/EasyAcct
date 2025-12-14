@@ -10,13 +10,14 @@ of GUI logic scripts.
 """
 from util.Application import Application
 application: Application = Application()
+window = None
 
 
 if __name__ == '__main__':
     from PyQt6 import QtWidgets
 
     from logic.logic_main import MainWindow
-    from util.db.Connection import *
+    from util.Connection import *
 
     program = QtWidgets.QApplication(sys.argv)
     window = MainWindow()

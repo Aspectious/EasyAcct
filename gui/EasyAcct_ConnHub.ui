@@ -104,19 +104,6 @@
     <string>Delete</string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="c_savecfg">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>200</y>
-     <width>221</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Save this configuration list</string>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections>

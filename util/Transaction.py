@@ -6,13 +6,13 @@ import datetime
 from util.Accounts import Account
 
 class Transaction:
-    def __init__(self, account:Account, date:datetime.datetime, type:int, amount:int):
+    def __init__(self, account:str, date:datetime.datetime, type:int, amount:float):
         self.account = account
         self.date = date
         self.type = type
         self.amount = amount
 
-    def getAccount(self):
+    def getName(self):
         return self.account
 
     def getDate(self):
@@ -26,9 +26,9 @@ class Transaction:
 
     def __str__(self):
         if (type == 1):
-            return "Transaction for " + self.account.account_name + " on (" + self.date.__str__() + ") --  Deposit  -- "  + str(self.amount)
-        if type == 0:
-            return "Transaction for " + self.account.account_name + " on (" + self.date.__str__() + ") --   Other   -- "  + str(self.amount)
+            return "Transaction for " + self.account + " on (" + self.date.isoformat() + ") --  Deposit  -- "  + str(self.amount)
         if type == -1:
-            return "Transaction for " + self.account.account_name + " on (" + self.date.__str__() + ") -- Withdrawl -- "  + str(self.amount)
+            return "Transaction for " + self.account + " on (" + self.date.isoformat() + ") -- Withdrawl -- "  + str(self.amount)
+        return "Transaction for " + self.account + " on (" + self.date.isoformat() + ") --   Other   -- " + str(
+                self.amount)
 

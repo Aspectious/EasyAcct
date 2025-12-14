@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>319</width>
-    <height>273</height>
+    <height>349</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>-30</x>
-     <y>230</y>
+     <y>310</y>
      <width>341</width>
      <height>32</height>
     </rect>
@@ -90,35 +90,51 @@
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>80</y>
-     <width>301</width>
-     <height>141</height>
+     <x>30</x>
+     <y>70</y>
+     <width>261</width>
+     <height>231</height>
     </rect>
    </property>
    <property name="title">
-    <string>Transaction</string>
+    <string>Transaction Type</string>
    </property>
-   <widget class="QLabel" name="label_3">
+   <widget class="QDoubleSpinBox" name="box_amount">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>20</y>
-      <width>101</width>
-      <height>51</height>
+      <x>30</x>
+      <y>180</y>
+      <width>201</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="maximum">
+     <double>999999999999.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>150</y>
+      <width>191</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>Transaction Type</string>
+     <string>Amount</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
     </property>
    </widget>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>20</y>
-      <width>121</width>
-      <height>52</height>
+      <x>50</x>
+      <y>30</y>
+      <width>160</width>
+      <height>111</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -130,6 +146,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QRadioButton" name="rb_set">
+       <property name="text">
+        <string>Set Balance</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QRadioButton" name="rb_withdraw">
        <property name="text">
         <string>Withdraw</string>
@@ -137,32 +160,6 @@
       </widget>
      </item>
     </layout>
-   </widget>
-   <widget class="QDoubleSpinBox" name="box_amount">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>100</y>
-      <width>191</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>53</x>
-      <y>80</y>
-      <width>191</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Amount</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignmentFlag::AlignCenter</set>
-    </property>
    </widget>
   </widget>
  </widget>

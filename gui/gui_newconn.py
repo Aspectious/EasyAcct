@@ -93,10 +93,11 @@ class Ui_NewConn(object):
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.rb_ConnLocal = QtWidgets.QRadioButton(parent=self.verticalLayoutWidget)
+        self.rb_ConnLocal.setChecked(True)
         self.rb_ConnLocal.setObjectName("rb_ConnLocal")
         self.verticalLayout.addWidget(self.rb_ConnLocal)
         self.rb_ConnRemote = QtWidgets.QRadioButton(parent=self.verticalLayoutWidget)
-        self.rb_ConnRemote.setChecked(True)
+        self.rb_ConnRemote.setChecked(False)
         self.rb_ConnRemote.setObjectName("rb_ConnRemote")
         self.verticalLayout.addWidget(self.rb_ConnRemote)
 

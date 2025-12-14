@@ -27,7 +27,7 @@ class Connection():
         self.transtable = transtable
         self.state = ConnectionState.UNKNOWN
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "Unknown Connection"
 
     def setMySqlData(self,host, port, user, password, database):
@@ -37,20 +37,24 @@ class Connection():
         self.password = password
         self.database = database
 
-    def __executeSingle(self, statement):
+    def __executeSingle(self, statement) -> list[any]:
         pass
 
-    def __executeMany(self, statement, data):
+    def __executeMany(self, statement, data)  -> list[any]:
         pass
-    def openConnection(self):
+    def openConnection(self) -> int:
         pass
-    def closeConnection(self):
+    def closeConnection(self) -> int:
         pass
-    def fetchAllAccounts(self):
+    def fetchAllAccounts(self) -> list[any]:
         pass
-    def fetchAllTransactions(self):
+    def fetchAllTransactions(self) -> list[any]:
         pass
-    def fetchTransactionsFromAccount(self, account:Account):
+    def fetchTransactionsFromAccount(self, account:Account) -> list[any]:
+        pass
+    def test(self) -> list[any]:
+        pass
+    def unsafe(self, query) -> list[any]:
         pass
 
 
@@ -58,12 +62,13 @@ class Connection():
 class SqLiteConnection(Connection):
     def __init__(self, filelocation, accttable, transtable):
         Connection.__init__(self, 0, accttable, transtable)
+        self.__connection = None
         self.database = filelocation
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Local: {self.database}"
 
-    def openConnection(self):
+    def openConnection(self) -> int:
         self.state = ConnectionState.CONNECTING
         try:
             self.__connection = sqlite3.connect(self.database)
@@ -73,7 +78,16 @@ class SqLiteConnection(Connection):
             self.state = ConnectionState.ERROR
             return 1
 
-    def __executeSingle(self, statement):
+    def closeConnection(self) -> int:
+        self.state = ConnectionState.CONNECTING
+        try:
+            self.__connection.close()
+            self.state = ConnectionState.DISCONNECTED
+        except Exception as err:
+            self.state = ConnectionState.ERROR
+            print(err)
+
+    def __executeSingleUnsafe(self, statement) -> list[any]:
         self.__cur = self.__connection.cursor()
         result = self.__cur.execute(statement)
         self.__connection.commit()
@@ -81,19 +95,46 @@ class SqLiteConnection(Connection):
         self.__cur.close()
         return result;
 
-    def __executemany(self, statement, data):
+    def __executeSinglePlaceholder(self, statement:str, data) -> list[any]:
+        print(self.state)
         self.__cur = self.__connection.cursor()
-        result = self.__cur.executemany(statement, data)
+        result = self.__cur.execute(statement, data)
         self.__connection.commit()
         result = result.fetchall()
         self.__cur.close()
         return result
 
 
-    def test(self):
-        test1 = self.__executeSingle("SELECT 1;")
+    def createTablesFromBlank(self):
+        # Need to create tables and relations. Default table names are "PrimaryAccounts" and "PrimaryAccounts.Transactions".
+        self.__executeSingleUnsafe("CREATE TABLE PrimaryAccounts ('Index' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, AccountName TEXT UNIQUE, AccountType INTEGER, Balance FLOAT);")
+        self.__executeSingleUnsafe("CREATE TABLE 'PrimaryAccounts.Transactions' ('Index' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, Date DATETIME, AccountName TEXT UNIQUE, TransactionType INTEGER, Delta FLOAT);")
+
+
+    def test(self) -> list[any]:
+        self.openConnection()
+        test1 = self.__executeSingleUnsafe("SELECT 1;")
+        self.closeConnection()
         return test1
 
+    def fetchAllAccounts(self) -> list[any]:
+        query = self.__executeSingleUnsafe(f"SELECT * FROM \"{self.accttable}\"")
+        return query
+
+    def fetchAllTransactions(self) -> list[any]:
+        query = self.__executeSingleUnsafe(f"SELECT * FROM \"{self.transtable}\"")
+        return query
+
+    def fetchTransactionsFromAccount(self, account:Account) -> list[any]:
+        query = self.__executeSinglePlaceholder("SELECT * FROM " + self.transtable + " WHERE AccountName=?;", account.account_name)
+        return query
+
+    """
+    The easiest way without spending several days devising a better solution.
+    """
+    def unsafe(self, query:str):
+        query = self.__executeSingleUnsafe(query)
+        return query
 
 
 
@@ -105,6 +146,8 @@ class MySQLConnection(Connection):
     def __str__(self):
         return f"Remote: {self.user} @ mysql://{self.host}:{self.port}/{self.database}"
     def openConnection(self):
+        if (self.state == ConnectionState.CONNECTED):
+            return
         attempt = 1
         while attempt < 4:
             self.state = ConnectionState.CONNECTING
@@ -166,25 +209,16 @@ class MySQLConnection(Connection):
         self.__cur.close()
 
     def test(self):
-        test1 = self.__executeSelectSingle("SELECT 1;")
-        if test1 == [(1,)]:
-            try:
-                test2 = self.__executeSelectSingle("SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME ='" + self.accttable + "';") # This is insecure but as of writing this I can't get select many to work, and the results never get sent to the user anyway.
-                if len(test2) >= 1:
-                    try:
-                        test2 = self.__executeSelectSingle(
-                            "SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME ='" + self.transtable + "';")  # This is insecure but as of writing this I can't get select many to work, and the results never get sent to the user anyway.
-                        if len(test2) >= 1:
-                            return 1
-                    except Exception as err:
-                        print(err)
-                        return 4
-            except Exception as err:
-                print(err)
-                return 3
-
-        # Able to detect both neccessary tables
-        return 1
+        self.openConnection()
+        try:
+            test1 = self.__executeSelectSingle("SELECT 1;")
+            if test1 == [(1,)]:
+                return 1
+            else:
+                return 0
+        except Exception as err:
+            print(err)
+            return 0
 
     def fetchAllAccounts(self):
         query = self.__executeSelectSingle("SELECT * FROM " + self.accttable)

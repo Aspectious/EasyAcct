@@ -70,19 +70,19 @@
       <x>10</x>
       <y>100</y>
       <width>211</width>
-      <height>51</height>
+      <height>52</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QRadioButton" name="rb_savings">
+      <widget class="QRadioButton" name="rb_acct">
        <property name="text">
         <string>Default Account Type</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="rb_acct">
+      <widget class="QRadioButton" name="rb_savings">
        <property name="text">
         <string>Savings Account</string>
        </property>

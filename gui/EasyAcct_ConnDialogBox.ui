@@ -322,6 +322,9 @@
        <property name="text">
         <string>Local Database File (.db)</string>
        </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -330,7 +333,7 @@
         <string>Remote Server (Mysql/Mariadb)</string>
        </property>
        <property name="checked">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
       </widget>
      </item>
