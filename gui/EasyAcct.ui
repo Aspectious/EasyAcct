@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1019</width>
-    <height>585</height>
+    <width>1020</width>
+    <height>600</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1020</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1020</width>
+    <height>600</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>EasyAcct Unified Bank Account Manager</string>
@@ -34,6 +46,9 @@
        <width>701</width>
        <height>431</height>
       </rect>
+     </property>
+     <property name="cornerButtonEnabled">
+      <bool>false</bool>
      </property>
     </widget>
     <widget class="QLabel" name="vD_DatabaseTitle">
@@ -101,7 +116,7 @@
       <x>740</x>
       <y>10</y>
       <width>271</width>
-      <height>531</height>
+      <height>481</height>
      </rect>
     </property>
     <property name="title">
@@ -120,16 +135,6 @@
       <string>Account Name</string>
      </property>
     </widget>
-    <widget class="KLineEdit" name="vP_AccountNameBox">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>50</y>
-       <width>251</width>
-       <height>23</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_3">
      <property name="geometry">
       <rect>
@@ -143,19 +148,6 @@
       <string>Account Type</string>
      </property>
     </widget>
-    <widget class="KLineEdit" name="vP_AccounTypeBox">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>100</y>
-       <width>251</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-    </widget>
     <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
@@ -167,9 +159,6 @@
      </property>
      <property name="text">
       <string>Account Balance</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
      </property>
     </widget>
     <widget class="QLineEdit" name="vP_AccountBalanceBox">
@@ -188,7 +177,7 @@
        <x>20</x>
        <y>190</y>
        <width>231</width>
-       <height>311</height>
+       <height>281</height>
       </rect>
      </property>
      <property name="title">
@@ -198,7 +187,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>20</y>
+        <y>30</y>
         <width>211</width>
         <height>27</height>
        </rect>
@@ -211,7 +200,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>50</y>
+        <y>60</y>
         <width>211</width>
         <height>27</height>
        </rect>
@@ -224,7 +213,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>80</y>
+        <y>90</y>
         <width>211</width>
         <height>27</height>
        </rect>
@@ -263,7 +252,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>270</y>
+        <y>240</y>
         <width>211</width>
         <height>27</height>
        </rect>
@@ -273,6 +262,42 @@
       </property>
      </widget>
     </widget>
+    <widget class="QLineEdit" name="vP_AccountNameBox">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>241</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="vP_AccountTypeBox">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>100</y>
+       <width>241</width>
+       <height>23</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="commitchanges">
+    <property name="geometry">
+     <rect>
+      <x>740</x>
+      <y>500</y>
+      <width>261</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Commit Changes to Database</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -280,77 +305,89 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1019</width>
-     <height>22</height>
+     <width>1020</width>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionNew_Database"/>
-    <addaction name="actionCreate_Database"/>
-    <addaction name="actionSave_Database"/>
+    <widget class="QMenu" name="menuNew">
+     <property name="title">
+      <string>New...</string>
+     </property>
+     <addaction name="mf_b_newdbfile"/>
+    </widget>
+    <widget class="QMenu" name="menuImport">
+     <property name="title">
+      <string>Import...</string>
+     </property>
+     <addaction name="mf_i_importacctfromcsv"/>
+    </widget>
+    <addaction name="menuNew"/>
+    <addaction name="separator"/>
+    <addaction name="menuImport"/>
    </widget>
    <widget class="QMenu" name="menuAccounts">
     <property name="title">
-     <string>Accounts</string>
+     <string>Bank</string>
     </property>
-    <addaction name="actionNew_Account"/>
-    <addaction name="actionClose_Account"/>
-   </widget>
-   <widget class="QMenu" name="menuView">
-    <property name="title">
-     <string>View</string>
-    </property>
-    <addaction name="actionAccount_Policy_Reference"/>
+    <addaction name="mb_a_open"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuConnection">
     <property name="title">
      <string>Connection</string>
     </property>
-    <addaction name="actionConnect_to_Database_Server"/>
-    <addaction name="actionDisconnect"/>
+    <addaction name="mb_c_connectionoptions"/>
     <addaction name="separator"/>
-    <addaction name="actionFetch_entries_from_Server"/>
+    <addaction name="actionSync_with_connection"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="mb_v_policy"/>
+    <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuAccounts"/>
    <addaction name="menuConnection"/>
-   <addaction name="menuView"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionNew_Database">
+  <action name="mb_f_new">
    <property name="text">
-    <string>New Database File</string>
+    <string>Import Accounts from CSV...</string>
    </property>
   </action>
-  <action name="actionCreate_Database">
+  <action name="mb_f_open">
    <property name="text">
     <string>Open Database From File</string>
    </property>
   </action>
-  <action name="actionSave_Database">
+  <action name="mb_f_save">
    <property name="text">
     <string>Save Database To File</string>
    </property>
   </action>
-  <action name="actionConnect_to_Database_Server">
+  <action name="mb_c_connect">
    <property name="text">
     <string>Connect to Database Server...</string>
    </property>
   </action>
-  <action name="actionDisconnect">
+  <action name="mb_c_disconnect">
    <property name="text">
     <string>Disconnect</string>
    </property>
   </action>
-  <action name="actionNew_Account">
+  <action name="mb_a_open">
    <property name="text">
     <string>Open Account</string>
    </property>
   </action>
-  <action name="actionClose_Account">
+  <action name="mb_a_close">
    <property name="text">
     <string>Close Account</string>
    </property>
@@ -360,24 +397,102 @@
     <string>Change Account Type</string>
    </property>
   </action>
-  <action name="actionAccount_Policy_Reference">
+  <action name="mb_v_policy">
    <property name="text">
     <string>Account Policy Reference</string>
    </property>
   </action>
-  <action name="actionFetch_entries_from_Server">
+  <action name="mb_c_fetch">
    <property name="text">
     <string>Fetch entries from Server...</string>
    </property>
   </action>
+  <action name="mb_c_connectionoptions">
+   <property name="text">
+    <string>Database Connections...</string>
+   </property>
+  </action>
+  <action name="actionImport_Transactions_from_CSV">
+   <property name="text">
+    <string>Import Transactions from CSV...</string>
+   </property>
+  </action>
+  <action name="actionImport_Accounts_from_CSV">
+   <property name="text">
+    <string>Import Accounts from CSV...</string>
+   </property>
+  </action>
+  <action name="actionExport_Accounts_to_CSV">
+   <property name="text">
+    <string>Export Accounts to CSV...</string>
+   </property>
+  </action>
+  <action name="actionRefresh_Current_Connection">
+   <property name="text">
+    <string>Reconnect</string>
+   </property>
+  </action>
+  <action name="actionExport_Database_to_File">
+   <property name="text">
+    <string>Export Database to File...</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionSync_with_connection">
+   <property name="text">
+    <string>Reload from Database</string>
+   </property>
+  </action>
+  <action name="actionPush_Changes">
+   <property name="text">
+    <string>Push Changes</string>
+   </property>
+  </action>
+  <action name="actionCreate_Blank_Database_File">
+   <property name="text">
+    <string>Create Blank Database File</string>
+   </property>
+  </action>
+  <action name="mf_b_newdbfile">
+   <property name="text">
+    <string>Blank Database File (.db)</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save...</string>
+   </property>
+  </action>
+  <action name="mf_i_importacctfromcsv">
+   <property name="text">
+    <string>Account Data from .CSV</string>
+   </property>
+  </action>
+  <action name="mf_i_importtransfromcsv">
+   <property name="text">
+    <string>Transaction Data from .CSV</string>
+   </property>
+  </action>
+  <action name="actionAccounts_to_CSV">
+   <property name="text">
+    <string>Accounts to .CSV</string>
+   </property>
+  </action>
+  <action name="actionTransactions_to_CSV">
+   <property name="text">
+    <string>Transactions to .CSV</string>
+   </property>
+  </action>
+  <action name="mb_a_offlineinitial">
+   <property name="text">
+    <string>Initialize Offline</string>
+   </property>
+  </action>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>klineedit.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

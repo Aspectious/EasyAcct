@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>NewConn</class>
+ <widget class="QDialog" name="NewConn">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>359</width>
+    <height>532</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Connection Manager</string>
+   <string>Add Connection</string>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>false</bool>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>260</y>
-     <width>211</width>
+     <x>190</x>
+     <y>490</y>
+     <width>161</width>
      <height>32</height>
     </rect>
    </property>
-   <property name="orientation">
-    <enum>Qt::Orientation::Horizontal</enum>
-   </property>
    <property name="standardButtons">
-    <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
+    <set>QDialogButtonBox::StandardButton::Discard|QDialogButtonBox::StandardButton::Save</set>
    </property>
   </widget>
   <widget class="QPushButton" name="b_testConn">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>260</y>
+     <y>490</y>
      <width>131</width>
      <height>31</height>
     </rect>
@@ -45,16 +45,16 @@
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>10</y>
-     <width>321</width>
-     <height>80</height>
+     <x>10</x>
+     <y>110</y>
+     <width>341</width>
+     <height>221</height>
     </rect>
    </property>
    <property name="title">
-    <string>Connection URL</string>
+    <string>Connection Options</string>
    </property>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="label_connaddr">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -64,7 +64,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Database Address</string>
+     <string>Server Address</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="conn_addr">
@@ -80,20 +80,7 @@
      <string>localhost</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="conn_port">
-    <property name="geometry">
-     <rect>
-      <x>260</x>
-      <y>40</y>
-      <width>51</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>3306</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="conn_portLabel">
     <property name="geometry">
      <rect>
       <x>260</x>
@@ -106,13 +93,123 @@
      <string>Port</string>
     </property>
    </widget>
+   <widget class="QLineEdit" name="conn_t_accts">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>140</y>
+      <width>241</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PrimaryAccounts</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>120</y>
+      <width>111</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Accounts Table</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>170</y>
+      <width>111</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Transactions Table</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="conn_t_trans">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>190</y>
+      <width>241</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PrimaryAccounts.Transactions</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>70</y>
+      <width>151</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Schema / Database Name</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="conn_schema">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>90</y>
+      <width>241</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>EasyAcct</string>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="conn_port">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>40</y>
+      <width>71</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="maximum">
+     <number>65535</number>
+    </property>
+    <property name="value">
+     <number>3306</number>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="fileselButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>40</y>
+      <width>71</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Select...</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QGroupBox" name="groupBox_2">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>90</y>
-     <width>361</width>
+     <x>10</x>
+     <y>330</y>
+     <width>341</width>
      <height>131</height>
     </rect>
    </property>
@@ -165,7 +262,7 @@
      </rect>
     </property>
     <property name="echoMode">
-     <enum>QLineEdit::EchoMode::Password</enum>
+     <enum>QLineEdit::EchoMode::Normal</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="conn_b_showpassword">
@@ -173,7 +270,7 @@
      <rect>
       <x>270</x>
       <y>86</y>
-      <width>77</width>
+      <width>51</width>
       <height>31</height>
      </rect>
     </property>
@@ -185,21 +282,63 @@
     </property>
    </widget>
   </widget>
-  <widget class="QLabel" name="label_5">
+  <widget class="QLabel" name="testlabel">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>230</y>
-     <width>371</width>
+     <y>470</y>
+     <width>341</width>
      <height>20</height>
     </rect>
    </property>
    <property name="text">
     <string>Connection Not Established</string>
    </property>
-   <property name="alignment">
-    <set>Qt::AlignmentFlag::AlignCenter</set>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_3">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>341</width>
+     <height>101</height>
+    </rect>
    </property>
+   <property name="title">
+    <string>Connection Type</string>
+   </property>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>30</y>
+      <width>231</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QRadioButton" name="rb_ConnLocal">
+       <property name="text">
+        <string>Local Database File (.db)</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="rb_ConnRemote">
+       <property name="text">
+        <string>Remote Server (Mysql/Mariadb)</string>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
  </widget>
  <resources/>
@@ -207,7 +346,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>Dialog</receiver>
+   <receiver>NewConn</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -223,7 +362,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>Dialog</receiver>
+   <receiver>NewConn</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

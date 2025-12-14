@@ -1,2 +1,8 @@
+*.pyc
 .idea/
 queries/
+__pycache__
+gui/__pycache__
+util/__pycache__
+util/db/__pycache__
+*/__pycache__
