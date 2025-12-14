@@ -57,7 +57,7 @@ class TransHistory(QtWidgets.QDialog, Ui_TransHistory):
             transtype = "Other"
             if (transaction.getType() == 1):
                 transtype = "Deposit"
-            elif (transaction.getType() == 2):
+            elif (transaction.getType() == -1):
                 transtype = "Withdraw"
             strdata.append([transaction.getDate().isoformat(), transtype, f'{transaction.getAmount():.2f}'])
 
