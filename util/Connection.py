@@ -20,6 +20,19 @@ class ConnectionState(Enum):
     ERROR = 4           # Defines a connection that has errored out and should be reconnected with caution.
 
 
+
+"""
+This is how I've handled connections to database sources.
+The base class defines a skeleton, similar to header files in c and cpp,
+where the children implement the database calls in different ways.
+
+Sadly, at the time of submission, the MySQL connection is broken, and so only
+the SQLite connection is running well.
+
+I have attempted to add effective placeholders, but because each connector implements placeholders differently
+it has been a headache to run consistently. As a result most queries are insecure and possibly subject to
+SQL Injection attacks. This is simply to function for the final.
+"""
 class Connection():
     def __init__(self, type, accttable, transtable):
         self.type = type
@@ -30,6 +43,10 @@ class Connection():
     def __str__(self) -> str:
         return "Unknown Connection"
 
+    """
+    Defines an extra set of information specifically for remote queries to MySQL or Mariadb.
+    While implemented in MySQLConnector, it needs to be here for the abstract "Connector" class.
+    """
     def setMySqlData(self,host, port, user, password, database):
         self.host = host
         self.port = port
@@ -37,28 +54,66 @@ class Connection():
         self.password = password
         self.database = database
 
+    """
+    Private Implementation to run a SQL Query. Was insecure.
+    Legacy Code, still in use.
+    """
     def __executeSingle(self, statement) -> list[any]:
         pass
-
+    """
+    Private implementation to run a multiple SQL Queries. 
+    Legacy Code.
+    """
     def __executeMany(self, statement, data)  -> list[any]:
         pass
+    """
+    Attempts to open the connection and mark the state as ConnectionState.CONNECTED.
+    """
     def openConnection(self) -> int:
         pass
+    """
+    Closes the connection and marks the "state" as ConnectionState.Disconnected.
+    """
     def closeConnection(self) -> int:
         pass
+    """
+    performs a select * from Accounts.
+    """
     def fetchAllAccounts(self) -> list[any]:
         pass
+    """
+    Fetches a Select * from Transactions.
+    """
     def fetchAllTransactions(self) -> list[any]:
         pass
+    """
+    Performs a Select * From Transaction Where AccountName
+    """
     def fetchTransactionsFromAccount(self, account:Account) -> list[any]:
         pass
+    """
+    Tests the connection, usually with a simple SELECT 1;
+    """
     def test(self) -> list[any]:
         pass
+    """
+    Runs an unsafe SQL command.
+    """
     def unsafe(self, query) -> list[any]:
         pass
+    """
+    Gets names of the two Database Tables.
+    Helpful most with writing changes to the database.
+    """
+    def getTableNames(self) -> tuple[str,str]:
+        return (self.accttable, self.transtable)
 
 
-
+"""
+Defines a SqLite3 Connection.
+Works the best so far.
+Implements methods in Connection.
+"""
 class SqLiteConnection(Connection):
     def __init__(self, filelocation, accttable, transtable):
         Connection.__init__(self, 0, accttable, transtable)
@@ -108,7 +163,7 @@ class SqLiteConnection(Connection):
     def createTablesFromBlank(self):
         # Need to create tables and relations. Default table names are "PrimaryAccounts" and "PrimaryAccounts.Transactions".
         self.__executeSingleUnsafe("CREATE TABLE PrimaryAccounts ('Index' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, AccountName TEXT UNIQUE, AccountType INTEGER, Balance FLOAT);")
-        self.__executeSingleUnsafe("CREATE TABLE 'PrimaryAccounts.Transactions' ('Index' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, Date DATETIME, AccountName TEXT UNIQUE, TransactionType INTEGER, Delta FLOAT);")
+        self.__executeSingleUnsafe("CREATE TABLE 'PrimaryAccounts.Transactions' ('Index' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, Date DATETIME, AccountName TEXT, TransactionType INTEGER, Delta FLOAT);")
 
 
     def test(self) -> list[any]:
@@ -137,7 +192,11 @@ class SqLiteConnection(Connection):
         return query
 
 
-
+"""
+Defines a MySQL Connection.
+Currently broken legacy code, however should be able to work with enough extra time.
+Implements methods in Connection.
+"""
 class MySQLConnection(Connection):
     def __init__(self, host:str, port:int, user:str, password:str, database:str, accttable:str, transtable:str):
         super().__init__(1, accttable, transtable)

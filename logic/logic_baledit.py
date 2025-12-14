@@ -3,6 +3,7 @@ from datetime import datetime
 
 from gui.gui_baledit import Ui_BalEditor
 import logic.logic_misc as logic_misc
+from util.Application import FC_NewTransaction
 
 from util.Transaction import Transaction
 from util.Accounts import Account, SavingAccount
@@ -62,7 +63,7 @@ class BalEdit(QtWidgets.QDialog, Ui_BalEditor):
     def validateInput(self) -> bool:
         sel = self.fetchTypeSel()
         amt = self.box_amount.value()
-
+        acct = application.bank.fetchAccount(self.t_accountname.text())
         if (sel == 99):
             logic_misc.infoDialog("Please select a transaction type.")
             return False
@@ -72,16 +73,26 @@ class BalEdit(QtWidgets.QDialog, Ui_BalEditor):
             logic_misc.infoDialog("Amount must be greater than zero.")
             return False
 
+        if (sel == -1):
+            if (type(acct) == SavingAccount):
+                if (acct.get_balance() - amt < SavingAccount.MINIMUM):
+                    logic_misc.infoDialog("Cannot overdraw past minimum balance.")
+                    return False
+            else:
+                if (acct.get_balance() - amt < 0):
+                    logic_misc.infoDialog("Cannot overdraw on account.")
+                    return False
+
         # check if below minimums
-        acct = application.bank.fetchAccount(self.t_accountname.text())
+
         if (acct is None):
             logic_misc.infoDialog("Account name not found. Please exit and try again.")
             return False
-        if (type(acct) == SavingAccount):
-            if (amt < SavingAccount.MINIMUM):
-                logic_misc.infoDialog(f"Amount must be greater than the minimum balance. \n MINIMUM = {SavingAccount.MINIMUM}")
-                return False
-
+        if (sel == 0):
+            if (type(acct) == SavingAccount):
+                if (amt < SavingAccount.MINIMUM):
+                    logic_misc.infoDialog(f"Amount must be greater than the minimum balance. \n MINIMUM = {SavingAccount.MINIMUM}")
+                    return False
         return True
 
 
@@ -99,8 +110,19 @@ class BalEdit(QtWidgets.QDialog, Ui_BalEditor):
             dt = datetime.now()
             type = self.fetchTypeSel()
             amt = self.box_amount.value()
-            tr = Transaction(acctname, dt, type, amt)
 
+            if (type != 0):
+                tr = Transaction(acctname, dt, type, amt)
+            else:
+                currentbal = application.bank.fetchAccount(acctname).get_balance()
+                desiredbal = amt
+                delta = desiredbal - currentbal
+                if (delta <= 0):
+                    type = -1
+                    delta = delta * -1
+                else:
+                    type = 1
+                tr = Transaction(acctname, dt, type, delta)
             resp = application.bank.writeNewTransaction(tr)
             if (resp == False):
                 logic_misc.infoDialog("Something went wrong writing new transaction.")

@@ -6,6 +6,7 @@ from datetime import datetime
 
 from util.Accounts import Account, SavingAccount
 from util.Transaction import Transaction
+from util.FC import *
 
 class Bank:
     def __init__(self, parentApplication):
@@ -30,6 +31,11 @@ class Bank:
             if accountName == account.account_name:
                 return False
         self.__accounts.append(account)
+        atype=0
+        if (type(account) == SavingAccount):
+            atype = 1
+        ch = FC_NewAccount(account.account_name, atype, account.account_balance)
+        self.application.writeChange(ch)
         return True
 
     def closeAccount(self, name:str) -> bool:
@@ -44,7 +50,6 @@ class Bank:
                 self.__accounts.remove(accountName)
                 return True
         return False
-
 
     """
     This is called whenver a database is loaded. Does not apply it to accounts on file.
@@ -65,6 +70,10 @@ class Bank:
         account = self.fetchAccount(acctname)
 
         self.loadTransaction(ts) # Applies to list
+        ch = FC_NewTransaction(ts.getDate(), ts.getName(), ts.getType(), ts.getAmount())
+        self.application.writeChange(ch)
+
+
         cinterest = self.checkInterest(acctname) # Checks interest
 
         # Performs operation on account
@@ -93,7 +102,8 @@ class Bank:
 
             account.set_balance((1+SavingAccount.RATE) * account.get_balance())
             self.__transactions.append(interestTransaction)
-
+            ch = FC_NewTransaction(interestTransaction.getDate(), interestTransaction.getName(), interestTransaction.getType(), interestTransaction.getAmount())
+            self.application.writeChange(ch)
 
         # Flags Changes to application to sync with database.
         return True

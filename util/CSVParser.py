@@ -7,26 +7,32 @@ from util.Transaction import Transaction
 """
 This Fetches all account data from a CSV and imports it under the right Account class.
 Looks for AccountName, AccountType, and Balance as the header text.
+See Test Datasets / Demo_AccountList.csv for a demo.
 """
 def parseAccountsFromCSV(file:str) -> list[Account]:
     accounts:list[Account] = []
 
     with open(file, newline='') as csvfile:
-        reader = csv.DictReader(csvfile)
+        reader = csv.DictReader(csvfile) # Dictionaries are cool
         for row in reader:
+            print(row)
             if row['AccountType'] == "SAVINGS":
                 svga = SavingAccount(row['AccountName'])
-                svga.set_balance(row['Balance'])
+                svga.set_balance(float(row['Balance']))
                 accounts.append(svga)
             elif row['AccountType'] == "DEFAULT":
                 acct = Account(row['AccountName'])
-                acct.set_balance(row['Balance'])
+                acct.set_balance(float(row['Balance']))
                 accounts.append(acct)
             else:
                 raise Exception("Unknown account type")
 
     return accounts
 
+"""
+Does the same as its twin function, but for a .csv of Transactions.
+See Test Datasets / Demo_TransactionList for a demo.
+"""
 def parseTransactionsFromCSV(file:str) -> list[Transaction]:
     tr:list[Transaction] = []
 

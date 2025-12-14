@@ -324,7 +324,6 @@
       <string>Import...</string>
      </property>
      <addaction name="mf_i_importacctfromcsv"/>
-     <addaction name="mf_i_importtransfromcsv"/>
     </widget>
     <addaction name="menuNew"/>
     <addaction name="separator"/>

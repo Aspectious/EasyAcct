@@ -161,7 +161,6 @@ class Ui_MainWindow(object):
         self.mb_a_offlineinitial.setObjectName("mb_a_offlineinitial")
         self.menuNew.addAction(self.mf_b_newdbfile)
         self.menuImport.addAction(self.mf_i_importacctfromcsv)
-        self.menuImport.addAction(self.mf_i_importtransfromcsv)
         self.menuFile.addAction(self.menuNew.menuAction())
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.menuImport.menuAction())

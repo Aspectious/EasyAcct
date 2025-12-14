@@ -20,87 +20,18 @@ from util.Connection import Connection as Connection, SqLiteConnection, Connecti
 
 import logic.logic_misc as logic_misc
 
+from util.FC import *
 
 
 
-"""
-These classes are implemented to streamline the different ways that the database can be updated from changes.
-Rather than write SQL statements on the fly I prepare them here, to which each change is added to a queue.
-Each SQL Statement is insecure but it works best with limited time.
-
-Each class has three methods with as many kwargs as needed:
-- __init__
-- getSQLString
-- __str__
 
 
-Class Structure:
-
-FloatingChange
-    |- FC_NewAccount
-    |- FC_UpdateAccount
-    |- FC_DropAccount
-    |- FC_NewTransaction
-    |- FC_DropTransaction
-"""
-class FloatingChange:
-    def __init__(self, **kwargs):
-        pass
-    def getSQLString(self, **kwargs) -> str:
-        pass
-    def __str__(self):
-        return "Generic Floating Change"
-class FC_NewAccount(FloatingChange):
-    def __init__(self, bankacct: Account):
-        super().__init__()
-        self.account:Account = bankacct
-    def getSQLString(self, table:str) -> str:
-        accttype = 0
-        if (type(self.account) == SavingAccount):
-            accttype = 1
-        return f"INSERT INTO \"{table}\" (AccountName, AccountType, Balance) VALUES (\"{self.account.get_name()}\", {accttype}, {self.account.get_balance()});"
-    def __str__(self):
-        return f"Create Account: {self.account.get_name()}"
-class FC_UpdateAccount(FloatingChange):
-    def __init__(self, bankacct: Account, baseName:str):
-        super().__init__()
-        self.account:Account = bankacct
-        self.baseN:str = baseName
-    def getSQLString(self, table:str) -> str:
-        accttype = 0
-        if type(self.account) == SavingAccount:
-            accttype = 1
-        return f"UPDATE \"{table}\" SET AccountName = \"{self.account.get_name()}\", AccountType = \"{accttype}\", Balance = \"{self.account.get_balance()}\" WHERE AccountName = \"{self.baseN}\";"
-    def __str__(self):
-        return f"Update Account: {self.baseN}"
-class FC_DropAccount(FloatingChange):
-    def __init__(self, acctName:str):
-        super().__init__()
-        self.accountName = acctName
-    def getSQLString(self, table:str) -> str:
-        return f"DELETE FROM \"{table}\" WHERE AccountName = \"{self.accountName}\";"
-    def __str__(self):
-        return f"Drop Account: {self.accountName}"
-class FC_NewTransaction(FloatingChange):
-    def __init__(self, transaction:Transaction):
-        super().__init__()
-        self.transaction:Transaction = transaction
-    def getSQLString(self, table:str) -> str:
-        return f"INSERT INTO \"{table}\" (Date, AccountName,TransactionType,Delta) VALUES (\"{self.transaction.getDate().isoformat()}\", \"{self.transaction.getName()}, {self.transaction.getType()}, {self.transaction.getAmount()}\"); "
-    def __str__(self):
-        if (self.transaction.getType() == 1):
-            return f"Deposit of {self.transaction.getAmount()} for account {self.transaction.getName()}"
-        if (self.transaction.getType() == 0):
-            return f"Set Balance to {self.transaction.getAmount()} for account {self.transaction.getName()}"
-        if (self.transaction.getType() == -1):
-            return f"Withdraw of {self.transaction.getAmount()} for account {self.transaction.getName()}"
 
 class Application:
     def __init__(self):
         self.bank:Bank = Bank(self)
         self.ConnectionList:list[Connection] = []
         self.ActiveConnectionIndex = None
-        self.floatingChanges:list[FloatingChange] = []
 
 
 
@@ -278,9 +209,22 @@ class Application:
             raise e
 
 
+    """
+    Super inefficient last-minute change. I had difficulty syncing changes across the database so
+    I decided to write changes immediately.
+    """
+    def writeChange(self, fc:FloatingChange):
+        conn = self.getSelConnection()
+        names = conn.getTableNames()
+        if (conn.state != ConnectionState.CONNECTED):
+            conn.openConnection()
+        str = fc.getSQLString(names[0],names[1])
+        conn.unsafe(str)
+
+
     def flagFloatingChange(self, fc:FloatingChange):
         self.floatingChanges.append(fc)
         print("Floating Change flagged.")
 
-    def checkFloatingChange(self):
-        return len(self.floatingChanges)
+    def fetchChanges(self):
+        return self.floatingChanges

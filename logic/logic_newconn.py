@@ -42,6 +42,9 @@ class NewConn(QtWidgets.QDialog, Ui_NewConn):
         # MySQL disabled in this version.
         logic_misc.infoDialog("Notice: MySQL Implementation is incomplete. This version uses SQLite Only.")
 
+        self.updateOptionsFromRadio()
+        self.rb_ConnRemote.setEnabled(False)
+
 
     def selFile(self):
         path = QFileDialog.getOpenFileName(self, 'Open File', "./", '*.db')
